@@ -1,0 +1,22 @@
+The idea was born out of the sheer inability to fit anything respectfully (language may not make sense, since im a bit groggy) out to only z ~ 0.9.
+
+Date: 04/12/2014
+Place: Memmingen Airport (seriously!)
+
+Euclid SNIa survey out to higher redshifts. 
+i-band out to z ~ 1.2
+Advantages: bluer than YJH, hence higher z
+there is a comparison to existing hubble diagrams
+more SNe for the simulations
+
+Drawbacks: More reddening than redder bands, 
+higher  intrinsic scatter
+
+look at the redshift range 0.9- 1.2, include i-band there and see how awesome the whole thing can become
+
+
+result1: 
+out to z ~ 1.3, the i-band SNe offer a much needed reduction to the wa-w0 contours from 
+
+there is some reason why extending out to z ~1.7 isnt as good as the other method
+

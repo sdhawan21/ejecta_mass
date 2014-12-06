@@ -5,9 +5,7 @@ things to do with Euclid
 --> is it then better to not do DESIRE and just look into the NIR?
 
 2. How well can the IR constraints w0-wa? 
-Contours from the 
-
-
+Contours from the SNe only are far too wide to constrain this alone. 
 
 
 
