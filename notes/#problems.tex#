@@ -1,0 +1,26 @@
+\documentclass{article}
+\begin{document}
+this is a short list/summary of the main problems that have been encountered in the cosmology fits. 
+each point has the appropriate solutions/trials along with it
+
+1. the w makefile doesn't work.	
+	its been re-written to incorporate the template from olom
+
+2. the contour sizes are not improvements on the optical surveys 
+	extending the high-redshift arms out ot z $\sim$ 0.9 have shown significant improvements
+
+3. why are the contours discretized?
+
+
+Observations:
+1. fits with dm15=1.1 have a different fit and error than without, eg sn404
+
+2. in the W14 sample SN2011fs does not fit if dm15 is not set. 
+
+3. cosmology must be getting affected by the dm15=1.1 fits. 
+
+run simulations without the dm15=1.1 and seehow it works out 
+
+
+
+\end{document}
