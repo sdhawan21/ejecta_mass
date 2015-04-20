@@ -1,0 +1,10 @@
+This directorry contains all files relating to a project on constructing an i-band hubble diagram for SN cosmology. 
+
+Using public large sample data, we aim to analyse the use of i-band light curves in measuring SN distances. 
+
+The analysis will follow closely the methods of Weyant et al. [2014] who used a sample of H-band light curves to measure the scatter in different studies. 
+
+We aim, however, to use unbiased spline as opposed to an SNpY template
+
+
+
