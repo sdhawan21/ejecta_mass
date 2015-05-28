@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 cosmology_notes
 ===============
 
@@ -9,3 +10,7 @@ notes on cosmology. theory+ practice problems, simulations with Euclid and the p
 
 3. pyscripts, julia attempts etc. 
 
+=======
+# ejecta_mass
+calculate ejecta masses for SN Ia
+>>>>>>> 6f24a9b9218afa93519b173cadaa42d5931d0074
