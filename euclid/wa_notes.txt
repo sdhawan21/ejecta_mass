@@ -1,5 +1,0 @@
-Using a euclid supernova survey to constrain the w0-wa contours 
-
-1. the extension of the hubble diagram out to z ~ 0.9 is a useful addition. However, looking at the Union 2.1 contours, it isn't exactly obvious whether we are actually improving the constraints on these parameters
-
-2. 
