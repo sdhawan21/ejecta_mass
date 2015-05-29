@@ -71,7 +71,7 @@ def main():
             bollc[:,0]-=tmax
             fid=fid_time(mni)
             b=bollc[(bollc[:,0]>40.) & (bollc[:,0] < 100.)]
-            popt, pcov = curve_fit(fid.edp, b[:,0], b[:,1], p0=[10.])
+            popt, pcov = curve_fit(fid.edp, b[:,0], b[:,1])
             
             rt=16.5-5.*(dm15-1.1)
             arr.append([i[0], mni, popt[0], fid.ejm(popt[0]+rt)])
