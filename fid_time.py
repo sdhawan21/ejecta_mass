@@ -5,6 +5,12 @@ import sys
 from scipy.optimize import curve_fit
 from pack import bol
 
+"""
+Define conversion factors and half-lives (e-folding times) of Co and Ni
+
+"""
+
+
 ds2=86400.0			#number of seconds in a day
 lni=1/(8.8)
 lco=1/(111.3)	
@@ -35,7 +41,7 @@ class fid_time:
         """
         return 8*np.pi*(((t0)*ds2)**2)*9e6*sc*3/(0.025*1.98e33)
     def val_calc(self, sn):
-    	filename = '/home/sdhawan/bol_ni_ej/lcbol_distrib/'+sn+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
+    	filename = '/Users/lapguest/bol_ni_ej/lcbol_distrib/'+sn+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
     	t=bol.bol_func().bolpeak(filename)
     	bollc=np.loadtxt(filename)
     	bollc[:,0]-=t[1]
@@ -49,7 +55,7 @@ class fid_time:
     	
 def main():
     filelist=np.loadtxt(sys.argv[1], dtype='string')
-    path='/home/sdhawan/bol_ni_ej/'
+    path='/Users/lapguest/newbol/bol_ni_ej/'
     pre='lcbol_distrib/'
     suf='_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
     arr=[]
@@ -82,7 +88,7 @@ def main():
             #plt.show()
         except:
             i
-    np.savetxt('ejecmass.txt', arr, fmt='%s')
+    np.savetxt(sys.argv[2], arr, fmt='%s')
 if __name__=="__main__":
     main()
 
