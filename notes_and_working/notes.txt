@@ -1,0 +1,10 @@
+Radioactive energy deposition governs the light curve through 2 main process,1. 'gamma rays emitted in the decay
+2. energy transfer to fast electrons in the ejecta through compton scattering
+
+--> timescales for the transfer are much smaller than the dynamical or decay time scales of the SN (at photospheric phases), which makes the steady-state assumptuion extremely plausible.
+
+-->
+
+
+
+
