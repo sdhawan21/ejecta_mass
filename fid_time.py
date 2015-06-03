@@ -1,3 +1,11 @@
+"""
+Code to calculate Ejecta masses of SNIa
+.. - Fit an energy deposition curve to data between +40 and +100 d
+.. - Use equation 24 and equation A16 of Jeffrey 1999
+.. - Use values for e-folding velocity, absorption opacity and q-factor (traces Ni distribution)
+
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
@@ -17,6 +25,9 @@ lco=1/(111.3)
 sc=1e10	
 fac=624150.647996		#Mev to ergs
 class fid_time:
+    """
+	calculate the fiducial time for a given bolometric light curve (Ni mass is obtained using Arnett's rule)
+    """
     def __init__(self, mni):
         self.mni=mni
     def edp(self, t, t0):
@@ -41,6 +52,9 @@ class fid_time:
         """
         return 8*np.pi*(((t0)*ds2)**2)*9e6*sc*3/(0.025*1.98e33)
     def val_calc(self, sn):
+	"""
+	A standalone function to calculate the fiducial time and ejecta mass for a given bolometric light curve
+	"""
     	filename = '/Users/lapguest/bol_ni_ej/lcbol_distrib/'+sn+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
     	t=bol.bol_func().bolpeak(filename)
     	bollc=np.loadtxt(filename)
@@ -53,9 +67,9 @@ class fid_time:
     	return popt[0], self.ejm(popt[0]+rt)
     	
     	
-def main():
+def main(path):
     filelist=np.loadtxt(sys.argv[1], dtype='string')
-    path='/Users/lapguest/newbol/bol_ni_ej/'
+    #path='/Users/lapguest/newbol/bol_ni_ej/'
     pre='lcbol_distrib/'
     suf='_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
     arr=[]
@@ -90,5 +104,5 @@ def main():
             i
     np.savetxt(sys.argv[2], arr, fmt='%s')
 if __name__=="__main__":
-    main()
+    main(sys.argv[3])
 
