@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import sys
 
 from scipy.optimize import curve_fit
+from scipy.integrate import quad
 from pack import bol
 
 """
@@ -66,6 +67,17 @@ class fid_time:
     	rt=16.5-5.*(dm15-1.1)
     	return popt[0], self.ejm(popt[0]+rt)
     	
+class q_fac:
+	def __init__(self, q):
+		self.q = q
+
+	def func(self, z):
+		return z*np.exp(-z)
+		
+	def denom(self, ran=[0, np.inf]):	
+		d=quad(self.func, ran[0], ran[1])
+		return self.q/d[0]
+
     	
 def main(path):
     filelist=np.loadtxt(sys.argv[1], dtype='string')
