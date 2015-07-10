@@ -1,8 +1,17 @@
+"""
+Code to calculate Ejecta masses of SNIa
+.. - Fit an energy deposition curve to data between +40 and +100 d
+.. - Use equation 24 and equation A16 of Jeffrey 1999
+.. - Use values for e-folding velocity, absorption opacity and q-factor (traces Ni distribution)
+
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import sys
 
 from scipy.optimize import curve_fit
+from scipy.integrate import quad
 from pack import bol
 
 """
@@ -17,6 +26,9 @@ lco=1/(111.3)
 sc=1e10	
 fac=624150.647996		#Mev to ergs
 class fid_time:
+    """
+	calculate the fiducial time for a given bolometric light curve (Ni mass is obtained using Arnett's rule)
+    """
     def __init__(self, mni):
         self.mni=mni
     def edp(self, t, t0):
@@ -41,6 +53,9 @@ class fid_time:
         """
         return 8*np.pi*(((t0)*ds2)**2)*9e6*sc*3/(0.025*1.98e33)
     def val_calc(self, sn):
+	"""
+	A standalone function to calculate the fiducial time and ejecta mass for a given bolometric light curve
+	"""
     	filename = '/Users/lapguest/bol_ni_ej/lcbol_distrib/'+sn+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
     	t=bol.bol_func().bolpeak(filename)
     	bollc=np.loadtxt(filename)
@@ -52,12 +67,27 @@ class fid_time:
     	rt=16.5-5.*(dm15-1.1)
     	return popt[0], self.ejm(popt[0]+rt)
     	
+class q_fac:
+	def __init__(self, q):
+		self.q = q
+
+	def func(self, z):
+		return z*np.exp(-z)
+		
+	def denom(self, ran=[0, np.inf]):	
+		d=quad(self.func, ran[0], ran[1])
+		return self.q/d[0]
+
     	
 def main(path):
     filelist=np.loadtxt(sys.argv[1], dtype='string')
+<<<<<<< HEAD
     #ipath='/Users/lapguest/newbol/bol_ni_ej/'
     
     #define the file prefix and suffix
+=======
+    #path='/Users/lapguest/newbol/bol_ni_ej/'
+>>>>>>> 823d0c6cb5edf68063aca52f01288ba14fea8fb1
     pre='lcbol_distrib/'
     suf='_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
     arr=[]
@@ -93,9 +123,14 @@ def main(path):
         except:
             i
     np.savetxt(sys.argv[2], arr, fmt='%s')
+<<<<<<< HEAD
 if __name__=="__main__":	
 	if len(sys.argv) == 4:
     		main(sys.argv[3])
     	else:
     		print "Usage: python", sys.argv[0], '<input file> <outfilename> <path to lcs>'
+=======
+if __name__=="__main__":
+    main(sys.argv[3])
+>>>>>>> 823d0c6cb5edf68063aca52f01288ba14fea8fb1
 
