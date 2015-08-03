@@ -4,8 +4,13 @@ Code to calculate Ejecta masses of SNIa
 .. - Use equation 24 and equation A16 of Jeffrey 1999
 .. - Use values for e-folding velocity, absorption opacity and q-factor (traces Ni distribution)
 
+This code follows the procedure in Stritzinger et al. 2006 and therefore would expectedly given out larger errors than those in Scalzo et al. 2014 )
+
+Error from Reddening and Distance is propagated in the bolometric light curve (both for the tail and the peak that gives out the 56Ni mass)
+Propagated using a Monte Carlo
 
 Note: requires pack to be install on the machine 
+
 """
 
 import numpy as np
@@ -30,36 +35,16 @@ fac=624150.647996		#Mev to ergs
 class fid_time:
     """
 	calculate the fiducial time for a given bolometric light curve (Ni mass is obtained using Arnett's rule)
+    Note: The input Ni mass can be a realisation from the normal distribution from the peak and the error on the peak 
+
     """
+
     def __init__(self, mni):
         """
         Initiate the class with a Nickel mass measurement
         """
         self.mni=mni
         #self.e_mni = e_mni
-    
-    def edp_mc(self, t, t0):    
-    	"""
-    	Do Monte Carlo over the space of Mni values 
-    	
-    	Energy deposition function. eqn 2 Stritzinger 2006 (also see Nadyozhin 1994 for a more detailed description of the derivation)
-    	
-    	"""
-    	
-    	#if errors need to be calculated by Monte Carlo
-    	
-	
-	Nni=self.numb(self.mni)
-	
-      
-        t1=lni*Nni*np.exp(-lni*t)*(1.75)		#ENi
-	
-	t2=lco*Nni*(lni/(lni-lco))*(np.exp(-lco*t)-np.exp(-lni*t))	#ECo_e+
-	t3=(0.12)+(3.61)*(1-np.exp(-(t0/t)**2))		#ECo_gamma
-
-	return (t1+t2*t3)/(fac*ds2)#(t2*t3)/(fac*ds2)
-	
-	
     
     def edp_nomc(self, t, t0):
     	"""
@@ -121,6 +106,7 @@ class fid_time:
     	return popt[0], self.ejm(popt[0]+rt)
     	
 class q_fac:
+
 	def __init__(self, q):
 		self.q = q
 
@@ -133,18 +119,17 @@ class q_fac:
 
    
 def main(path):
-
+    #list of SNe files to be extract
     filelist=np.loadtxt(sys.argv[1], dtype='string')
 
-    #ipath='/Users/lapguest/newbol/bol_ni_ej/'
-    
-    #define the file prefix and suffix
-
-    #path='/Users/lapguest/newbol/bol_ni_ej/'
+    #pre: is the directory with the light curves 
+    #suf: is the suffix for each file (u->H coverage)
 
     pre='lcbol_distrib/'
     suf='_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
     arr=[]
+    
+    #loop over the SNe in the input file
     for i in filelist:
         try:
             #complete filename 
@@ -167,50 +152,73 @@ def main(path):
             
             mni=bp(f)[0]/2e43		#needs to be a function of the rise time
 	   
-	    e_mni = bp(f)[2]/2e43
-	    
+
+	    errfunc = bol.bol_func().err_peak
+            
+            #e_mni = np.std([errfunc(bollc) for k in range(10000)])
+            e_mni = bollc[bollc[:,1]==max(bollc[:,1])][0][2]/2e43
+
+            #very, very crude evaluation of Dm15 
 	    dm15 = - (mni -1.3) /0.62
 	    
             #check whether there is pre-maximum bolometric coverage
             assert tmax != bollc[0][0]
             
+            #shift time axis to phase
             bollc[:,0]-=tmax
             
-            print e_mni
-            #define the phase range for the curve fit
+            #define the phase range for the curve fit (+40 to +100)
             b=bollc[(bollc[:,0]>40.) & (bollc[:,0] < 100.)]
-            #print max(b[:,0])
+    
             print 'Curve fitting', i[0]
             
             #best curvefit parameters
             param_arr=[]
             
-            for k in range(100000):
-            	
+            # run the Monte Carlo for each realisation of 56Ni mass
+            for k in range(1000):
+            	#initialize the class with 56Ni mass realisation
             	fid=fid_time(np.random.normal(mni, e_mni))
-            	popt, pcov = curve_fit(fid.edp_nomc, b[:,0], b[:,1], p0=[20.])
-            #    print popt
+
+                #optimal fitting parameters and covariance matrix 
+            	popt, pcov = curve_fit(fid.edp_nomc, b[:,0], b[:,1])
           
-	        perr = np.sqrt(np.diag(pcov))
+                #
+	        #perr = np.sqrt(np.diag(pcov))
             
 		param_arr.append(popt[0])
            
             #calculate rise time using ganeshalingham et al. 
             rt=16.5-5.*(dm15-1.1)
         
-            fid=fid_time(np.random.normal(mni, e_mni))
-            t0=np.mean(param_arr)+rt
+            #get best fit value (for the Mni)
+            fid=fid_time(mni)
+            p,c=curve_fit(fid.edp_nomc, b[:,0], b[:,1])
+
+
+            perr = np.sqrt(np.diag(c))
+
+            # use the Monte Carlo ejecta mass function to get error from the fit
+            err_fit = fid.ejm_mc([p[0], perr[0]])[1]
+
+
+            #transparency time (from explosion)
+            t0=p[0]+rt
         
             #error in ejecta mass from curve fit
 
 	    ejarr = [fid.ejm(j+rt) for j in param_arr]
-            ej, e_ej = np.mean(ejarr), np.std(ejarr)#fid.ejm_mc([t0, perr[0]])
-	           
-	    print ej, e_ej   
+            ej, e_ej = fid.ejm(t0), np.std(ejarr)
+	    
+       	    print ej, e_ej   
+
+            #add the error from Nickel mass and t0 fit in quadrature
+            tot_err = np.sqrt(e_ej**2 + err_fit**2)
+
             #print "For", i[0], "the error in the peak is", perr[0]
             
             #five column array of name,  nickel mass, t0(post max), t0, mej, err    
-            arr.append([i[0], mni, np.mean(param_arr), t0, round(ej, 3), round(e_ej, 3)])
+            arr.append([i[0], mni, np.mean(param_arr), t0, round(ej, 3), round(tot_err, 3)])
 	
             #plot the light curve and the fit to late data
             """
@@ -220,6 +228,7 @@ def main(path):
 	    """
         except:
             i
+
     np.savetxt(sys.argv[2], arr, fmt='%s')
 
 if __name__=="__main__":
