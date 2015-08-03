@@ -31,15 +31,12 @@ class fid_time:
     """
 	calculate the fiducial time for a given bolometric light curve (Ni mass is obtained using Arnett's rule)
     """
-    
-   
-    def __init__(self, mni, e_mni):
+    def __init__(self, mni):
         """
         Initiate the class with a Nickel mass measurement
         """
         self.mni=mni
-        self.e_mni = e_mni
-    
+        #self.e_mni = e_mni
     
     def edp_mc(self, t, t0):    
     	"""
@@ -51,9 +48,8 @@ class fid_time:
     	
     	#if errors need to be calculated by Monte Carlo
     	
-	m = np.random.normal(self.mni, self.e_mni)
-	print m
-	Nni=self.numb(m)
+	
+	Nni=self.numb(self.mni)
 	
       
         t1=lni*Nni*np.exp(-lni*t)*(1.75)		#ENi
@@ -179,39 +175,42 @@ def main(path):
             assert tmax != bollc[0][0]
             
             bollc[:,0]-=tmax
-            fid=fid_time(mni, e_mni)
             
+            print e_mni
             #define the phase range for the curve fit
             b=bollc[(bollc[:,0]>40.) & (bollc[:,0] < 100.)]
-            print max(b[:,0])
+            #print max(b[:,0])
             print 'Curve fitting', i[0]
             
             #best curvefit parameters
             param_arr=[]
             
-            #for k in range(10000):
-            popt, pcov = curve_fit(fid.edp_mc, b[:,0], b[:,1], p0=[20.])
+            for k in range(100000):
+            	
+            	fid=fid_time(np.random.normal(mni, e_mni))
+            	popt, pcov = curve_fit(fid.edp_nomc, b[:,0], b[:,1], p0=[20.])
             #    print popt
           
-            perr = np.sqrt(np.diag(pcov))
+	        perr = np.sqrt(np.diag(pcov))
             
-#            	param_arr.append(popt[0])
+		param_arr.append(popt[0])
            
             #calculate rise time using ganeshalingham et al. 
             rt=16.5-5.*(dm15-1.1)
         
-        
-            t0=popt[0]+rt
+            fid=fid_time(np.random.normal(mni, e_mni))
+            t0=np.mean(param_arr)+rt
         
             #error in ejecta mass from curve fit
 
-	    
-            ej, e_ej = fid.ejm_mc([t0, perr[0]])
-	                
-            print "For", i[0], "the error in the peak is", perr[0]
+	    ejarr = [fid.ejm(j) for j in param_arr]
+            ej, e_ej = np.mean(ejarr), np.std(ejarr)#fid.ejm_mc([t0, perr[0]])
+	           
+	    print ej, e_ej   
+            #print "For", i[0], "the error in the peak is", perr[0]
             
             #five column array of name,  nickel mass, t0(post max), t0, mej, err    
-            arr.append([i[0], mni, popt[0], t0, round(ej, 3), round(e_ej, 3)])
+            arr.append([i[0], mni, np.mean(param_arr), t0, round(ej, 3), round(e_ej, 3)])
 	
             #plot the light curve and the fit to late data
             """
