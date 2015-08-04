@@ -119,6 +119,7 @@ class q_fac:
 
    
 def main(path):
+
     #list of SNe files to be extract
     filelist=np.loadtxt(sys.argv[1], dtype='string')
 
@@ -175,19 +176,24 @@ def main(path):
             #best curvefit parameters
             param_arr=[]
             
-            # run the Monte Carlo for each realisation of 56Ni mass
-            for k in range(1000):
-            	#initialize the class with 56Ni mass realisation
-            	fid=fid_time(np.random.normal(mni, e_mni))
-
-                #optimal fitting parameters and covariance matrix 
-            	popt, pcov = curve_fit(fid.edp_nomc, b[:,0], b[:,1])
-          
-                #
-	        #perr = np.sqrt(np.diag(pcov))
             
-		param_arr.append(popt[0])
-           
+            k=0
+            # run the Monte Carlo for each realisation of 56Ni mass
+            while k < 1000:
+            	real = np.random.normal(mni, e_mni)
+            	if real > 0 and real < 2:
+            		#initialize the class with 56Ni mass realisation
+            		fid=fid_time(real)
+
+                	#optimal fitting parameters and covariance matrix 
+            		popt, pcov = curve_fit(fid.edp_nomc, b[:,0], b[:,1])
+          
+                	#
+	        	#perr = np.sqrt(np.diag(pcov))
+            		if popt[0] > 0 and popt[0] < 40:
+				param_arr.append(popt[0])
+           			k+=1
+           		
             #calculate rise time using ganeshalingham et al. 
             rt=16.5-5.*(dm15-1.1)
         
@@ -195,7 +201,7 @@ def main(path):
             fid=fid_time(mni)
             p,c=curve_fit(fid.edp_nomc, b[:,0], b[:,1])
 
-
+	    #error array from covariance matrix
             perr = np.sqrt(np.diag(c))
 
             # use the Monte Carlo ejecta mass function to get error from the fit
@@ -218,7 +224,7 @@ def main(path):
             #print "For", i[0], "the error in the peak is", perr[0]
             
             #five column array of name,  nickel mass, t0(post max), t0, mej, err    
-            arr.append([i[0], mni, np.mean(param_arr), t0, round(ej, 3), round(tot_err, 3)])
+            arr.append([i[0], round(mni, 3), round(e_mni, 3), np.mean(param_arr), t0, round(ej, 3), round(tot_err, 3)])
 	
             #plot the light curve and the fit to late data
             """
