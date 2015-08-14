@@ -11,6 +11,8 @@ Propagated using a Monte Carlo
 
 Note: requires pack to be install on the machine 
 
+Todo: Errors on the 91bg-likes (need better estimates of 56Ni mass, new errors look more realistic)
+
 """
 
 import numpy as np
@@ -179,6 +181,7 @@ def main(path):
             
             k=0
             # run the Monte Carlo for each realisation of 56Ni mass
+            
             while k < 1000:
             	real = np.random.normal(mni, e_mni)
             	if real > 0 and real < 2:
