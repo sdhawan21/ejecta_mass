@@ -76,7 +76,7 @@ class fid_time:
         
         (talk to Wolfgang H. about this equation)
         
-        v_e = 3000 km s^-1
+        v_e = 3000
         """
         
         return 8*np.pi*(((t0)*ds2)**2)*9e6*sc*3/(0.03*1.98e33)
