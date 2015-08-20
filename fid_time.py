@@ -13,6 +13,8 @@ Note: requires pack to be install on the machine
 
 Todo: Errors on the 91bg-likes (need better estimates of 56Ni mass, new errors look more realistic)
 
+K value can be changed
+
 """
 
 import numpy as np
@@ -34,6 +36,7 @@ lni=1/(8.8)
 lco=1/(111.3)	
 sc=1e10	
 fac=624150.647996		#Mev to ergs
+
 class fid_time:
     """
 	calculate the fiducial time for a given bolometric light curve (Ni mass is obtained using Arnett's rule)
@@ -78,10 +81,13 @@ class fid_time:
         
         (talk to Wolfgang H. about this equation)
         
-        v_e = 3000 km s^-1
+        v_e = 2500 km s^-1
+        
+        k= .03 cm^2 / g
         """
         
-        return 8*np.pi*(((t0)*ds2)**2)*9e6*sc*3/(0.03*1.98e33)
+        ve2 = (3e3)**2
+        return 8*np.pi*(((t0)*ds2)**2)*ve2*sc*3/(0.03*1.98e33)
         
         
     def ejm_mc(self, t, n=10000):
@@ -97,14 +103,14 @@ class fid_time:
 	A standalone function to calculate the fiducial time and ejecta mass for a given bolometric light curve
 	"""
     
-    	filename = p+'bol_ni_ej/lcbol_distrib/'+sn+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
+    	filename = p+'bol_ni_ej/lcbol_distrib/'+sn+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSP.dat'
     	
     	t=bol.bol_func().bolpeak(filename)
     	bollc=np.loadtxt(filename)
     	bollc[:,0]-=t[1]
     	b=bollc[(bollc[:,0]>40.) & (bollc[:,0] < 100.)]
     	mni=t[0]/2e43
-    	popt, pcov = curve_fit(self.edp, b[:,0], b[:,1])
+    	popt, pcov = curve_fit(self.edp_nomc, b[:,0], b[:,1])
     	dm15= -(mni - 1.3)/.62
     	rt=16.5-5.*(dm15-1.1)
     	return popt[0], self.ejm(popt[0]+rt)
@@ -191,7 +197,7 @@ def main(path):
             		fid=fid_time(real)
 
                 	#optimal fitting parameters and covariance matrix 
-            		popt, pcov = curve_fit(fid.edp_nomc, b[:,0], b[:,1])
+            		popt, pcov = curve_fit(fid.edp_nomc, b[:,0], b[:,1], sigma=b[:,2])
           
                 	#
 	        	#perr = np.sqrt(np.diag(pcov))
@@ -204,7 +210,7 @@ def main(path):
         
             #get best fit value (for the Mni)
             fid=fid_time(mni)
-            p,c=curve_fit(fid.edp_nomc, b[:,0], b[:,1])
+            p,c=curve_fit(fid.edp_nomc, b[:,0], b[:,1], sigma=b[:,2])
 
 	    #error array from covariance matrix
             perr = np.sqrt(np.diag(c))
