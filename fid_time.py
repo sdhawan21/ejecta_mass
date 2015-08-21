@@ -133,11 +133,16 @@ def main(path):
     #list of SNe files to be extract
     filelist=np.loadtxt(sys.argv[1], dtype='string')
 
-    #pre: is the directory with the light curves 
+    #pre: is the directory with the light curves  (from command line)
     #suf: is the suffix for each file (u->H coverage)
 
-    pre='lcbol_distrib/'
-    suf='_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
+    pre=''		#its an artifact now, the directory is given from command lines
+    if sys.argv[4] == '1':
+    	suf='_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
+    	fac = 1.
+    else:
+    	suf = '_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSP.dat'
+    	fac = 1.1
     arr=[]
     
     #loop over the SNe in the input file
@@ -163,7 +168,7 @@ def main(path):
             
             mni=bp(f)[0]/2e43		#needs to be a function of the rise time
 	   
-
+	    #mni*=1.1
 	    errfunc = bol.bol_func().err_peak
             
             #e_mni = np.std([errfunc(bollc) for k in range(10000)])

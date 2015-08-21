@@ -10,8 +10,14 @@ from pack import bol, fid_time
 def main():
 	mod = sys.argv[1]
         fwrite = sys.argv[2]
+        ir = sys.argv[4]
+        
+       	if ir == '1':
+       		suf = '_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
+       	else:
+       		suf = '_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSP.dat'
        
-	f = '/home/sdhawan/bol_ni_ej/lcbol_distrib/'+mod+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
+	f = '/home/sdhawan/bol_ni_ej/lcbol_distrib/'+mod+suf
 
 	bp = bol.bol_func().bolpeak
 	m,t=bp(f)
@@ -34,15 +40,18 @@ def main():
 	print "The Nickel mass is:", mni
         print "The rise time is :", rt
 	
-	bb = ft.val_calc(mod, '/home/sdhawan/', rt)
+	bb = ft.val_calc(mod, '/home/sdhawan/', rt, ir)
         
-        if fwrite:
+        if fwrite == True:
                 fout.write(mod+'\t'+str(bb[1])+'\n')
         fout.close()
+        print suf
         print bb, t
         
         plotlc = sys.argv[3]
-	if plotlc:
+       
+	
+	if plotlc == True:
 	
 		sn = np.loadtxt(f)
 		ph = sn[:,0] - bp(f)[1]
