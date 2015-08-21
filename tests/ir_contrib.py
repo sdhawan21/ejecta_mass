@@ -27,12 +27,18 @@ def ir_frac(sn):
 			fracarr.append(irlc[irlc[:,0]==i[0]][0][1]/i[1])
 			pharr.append(i[0])
 	return 	np.array(pharr), np.array(fracarr)
-	
+
+def ir_at_max(sn):
+	p, f = ir_frac(sn)
+	f1=f[abs(p) == min(abs(p))][0]
+	return f1
 def main():
 	pt = '/home/sdhawan/bol_ni_ej/'
 	
 	sn =sys.argv[1]
 	p, f=ir_frac(sn)
+	print "the NIR fraction at bolometric maximum is:", round(ir_at_max(sn)*100, 2), "%"
+
 	plt.plot(p, f)
 	plt.show()
 	return 0
