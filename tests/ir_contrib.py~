@@ -35,11 +35,25 @@ def ir_at_max(sn):
 def main():
 	pt = '/home/sdhawan/bol_ni_ej/'
 	
-	sn =sys.argv[1]
-	p, f=ir_frac(sn)
-	print "the NIR fraction at bolometric maximum is:", ir_at_max(sn)*100, "%"
+	#sn =sys.argv[1]
+	sbv = np.loadtxt(pt+'sbv_all_b14.txt', dtype='string')
+	snlis = np.loadtxt('all91bg.txt', dtype='string')
+	#p, f=ir_frac(sn)
+	arr =[]
+	for i in  snlis:
+		try:
+			s  = sbv[sbv[:,0] == i][0]
+			
+			irt = ir_at_max(i)
+			print irt
+			arr.append([irt, float(i[1]), float(i[2])])
+		except:
+			i
+	print arr
+	arr = np.array(arr)
+	#print "the NIR fraction at bolometric maximum is:", round(ir_at_max(sn)*100, 2), "%"
 
-	plt.plot(p, f)
+	plt.errorbar(arr[:,0], arr[:,1] , arr[:,2], fmt='go')
 	plt.show()
 	return 0
 	ir = np.loadtxt('../ejecmass.txt', usecols=(-2, -1))
