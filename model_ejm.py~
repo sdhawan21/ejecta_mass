@@ -68,7 +68,7 @@ def main():
 		
 			
 	
-		#plt.yscale('log')
+		plt.yscale('log')
 		plt.show()
 	
 	
