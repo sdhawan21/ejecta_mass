@@ -1,0 +1,26 @@
+import numpy as np
+import sys
+
+
+from pack import bol, fid_time
+
+
+def main():
+	mod = sys.argv[1]
+	f = '/Users/lapguest/bol_ni_ej/lcbol_distrib/'+mod+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
+
+	bp = bol.bol_func().bolpeak
+	m,t=bp(f)
+
+	rt = t
+	mni = m/2e43
+
+	ft = fid_time.fid_time(mni)
+
+	print ft.val_calc(mod, '/Users/lapguest/'), t
+
+main()
+
+
+
+
