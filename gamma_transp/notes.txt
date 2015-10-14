@@ -1,6 +1,8 @@
 Using the formula from Sollerman et al. 2004 we calculate the gamma transparency timescale for a series of Ia's
 
-the t1 should be calculated from the time of formation of Co (which would be close to maximum light since 7/8th of the56Ni would have decayed by then)
+#the t1 should be calculated from the time of formation of Co (which would be close to maximum light since 7/8th of the56Ni would have decayed by then)
 
-
+-- t1 is the transparency timescale calculated in the same way as Stritzinger et al. 2006 and Scalzo et al. 2014.
+tc is a multiple of this. The factor depends on the assumption for the Co decay energy in the gamma ray and positron
+ 
 
