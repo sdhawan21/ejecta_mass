@@ -1,0 +1,12 @@
+Notes on the ejecta mass calculations for the fast decliners paper
+
+--> Including the NIR (JH) contribution for the bolometric light curve there are only three SNe that have enough late time information to calculate the ejecta mass
+(SN2005ke, SN2006mr, SN2007on)
+
+--> Without the NIR, there are two more, namely SN2007ax, SN2009F.
+
+** All have ejecta masses significantly below 1 m_sun.
+(without the NIR, the total calculated ejecta mass is slightly lower than with the JH).
+
+--> A_v doesn't affect the final ejecta mass estimate (!).
+
