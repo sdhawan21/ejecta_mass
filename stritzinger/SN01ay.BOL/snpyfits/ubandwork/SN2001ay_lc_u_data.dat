@@ -1,0 +1,8 @@
+#  column 1:  time
+#  column 2:  oberved magnitude
+#  column 3:  error in observed magnitude
+#  column 4:  Flag:  0=OK  1=Invalid K-correction
+2021.74  16.517  0.034  0
+2037.38  17.416  0.040  0
+2040.25  17.521  0.031  0
+2051.77  18.458  0.041  0
