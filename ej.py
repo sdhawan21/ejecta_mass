@@ -18,8 +18,9 @@ import sys
 from scipy.stats import pearsonr
 from scipy.optimize import curve_fit
 from scipy.interpolate import interp1d
-from pack import fid_time,bol 
-
+#from pack import fid_time,bol 
+from pack import bol
+from sublum import fid_time
 
 def peak(lc):
     """

@@ -1,0 +1,23 @@
+A few notes on the CSP M_ej-M_ni distribution
+
+1. The CSP bolometric light curves were calculated using stephane's code. Ejecta masses calculated with the exact same assumptions as Stritzinger et al. 2006
+
+aims:
+	a. what is the slope of the M_ej - MNi relation
+	b. what is the fraction of SNe with M_ej < 1.4 M_sun (conditional, of course, on the assumptions of q, k_gamma, v_e)?
+
+
+Note 1: the calculated M_ej from Richard's code for the CSP sample has a similar fraction of M_ch explosions to what I calculated with the more simple S06 approach.
+( ~ 45% of all SNe have sub-Mch ejecta masses, although richard's sample doesn't have 91bg-likes, 2 of which are in the complete CSP sample I was looking into)
+
+Note 2: Max said the Boaz Katz gets t0 about a week later than his. Adding (very, very crudely), 7 days to the t0 value of S06 shows that ~ half the objects are M_ch ejecta masses
+
+Note 3: Comparing the M_ej - M_Ni distribution to what Mike (Childress) gets for his objects in the 56Ni nebular line paper, there seems to be a clear split in the relation with half the objects clumping near the Mch border.
+The ejecta masses are calculated here using the relation between stretch and M-ej found for SNfactory sample in Scalzo et al. 2014a
+
+Using only the t0 values for the Scalzo et al. 2014a sample and converting to ejecta masses using the assumptions in stritzinger et al. 2006, the fraction of super-Mc is as high as for the CSP sample.
+
+
+Maximum value of M_ej as calculated by me: 1.89 M_sun
+
+As calculated using the t_0 values from Richard's fits: 
