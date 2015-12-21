@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.9.22)  15 DEC 2015 13:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.9.22)  18 DEC 2015 12:35
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -56,7 +56,7 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \Gin@req@height=\dimen103
 \Gin@req@width=\dimen104
 )
-(./plots.aux)
+No file plots.aux.
 \openout1 = `plots.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 7.
@@ -71,7 +71,6 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 7.
 LaTeX Font Info:    ... okay on input line 7.
-
 (/usr/local/texlive/2013basic/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count88
@@ -154,45 +153,73 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <7> on input line 16.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <5> on input line 16.
+LaTeX Font Info:    Try loading font information for OML+cmr on input line 42.
 
-<mej_mni_risetime.pdf, id=1, 578.16pt x 433.62pt>
-File: mej_mni_risetime.pdf Graphic file (type pdf)
- <use mej_mni_risetime.pdf>
-Package pdftex.def Info: mej_mni_risetime.pdf used on input line 26.
+(/usr/local/texlive/2013basic/texmf-dist/tex/latex/base/omlcmr.fd
+File: omlcmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OML/cmr/m/n' in size <10> not available
+(Font)              Font shape `OML/cmm/m/it' tried instead on input line 42.
+ [1
+
+{/usr/local/texlive/2013basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+<SN2005M.pdf, id=15, 578.16pt x 433.62pt>
+File: SN2005M.pdf Graphic file (type pdf)
+ <use SN2005M.pdf>
+Package pdftex.def Info: SN2005M.pdf used on input line 48.
 (pdftex.def)             Requested size: 172.5pt x 127.00699pt.
 
-<mej_mni_richard_comparison.pdf, id=2, 578.16pt x 433.62pt>
+<mej_mni_risetime.pdf, id=16, 578.16pt x 433.62pt>
+File: mej_mni_risetime.pdf Graphic file (type pdf)
+ <use mej_mni_risetime.pdf>
+Package pdftex.def Info: mej_mni_risetime.pdf used on input line 54.
+(pdftex.def)             Requested size: 172.5pt x 127.00699pt.
+
+<mej_mni_richard_comparison.pdf, id=17, 578.16pt x 433.62pt>
 File: mej_mni_richard_comparison.pdf Graphic file (type pdf)
 
 <use mej_mni_richard_comparison.pdf>
-Package pdftex.def Info: mej_mni_richard_comparison.pdf used on input line 32.
+Package pdftex.def Info: mej_mni_richard_comparison.pdf used on input line 60.
 (pdftex.def)             Requested size: 172.5pt x 127.00699pt.
- [1
 
-{/usr/local/texlive/2013basic/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./
-mej_mni_risetime.pdf>] [2 <./mej_mni_richard_comparison.pdf>] (./plots.aux) ) 
+
+LaTeX Warning: Reference `fig:mej-mni' on page 2 undefined on input line 61.
+
+[2 <./SN2005M.pdf> <./mej_mni_risetime.pdf
+
+pdfTeX warning: /usr/texbin/pdflatex (file ./mej_mni_risetime.pdf): PDF inclusi
+on: multiple pdfs with page group included in a single page
+>] [3 <./mej_mni_richard_comparison.pdf>] (./plots.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 1512 strings out of 494503
- 22205 string characters out of 6167162
- 75713 words of memory out of 5000000
- 4802 multiletter control sequences out of 15000+600000
- 7290 words of font info for 26 fonts, out of 8000000 for 9000
+ 1538 strings out of 494503
+ 22640 string characters out of 6167162
+ 78705 words of memory out of 5000000
+ 4824 multiletter control sequences out of 15000+600000
+ 8510 words of font info for 30 fonts, out of 8000000 for 9000
  319 hyphenation exceptions out of 8191
- 37i,6n,23p,232b,232s stack positions out of 5000i,500n,10000p,200000b,80000s
-</
-usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pf
-b></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi1
-2.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
-mmi7.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr10.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmr12.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr17.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmr7.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public
-/amsfonts/cm/cmsy10.pfb>
-Output written on plots.pdf (2 pages, 96768 bytes).
+ 37i,6n,23p,631b,234s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx1
+0.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mbx12.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfonts/
+cm/cmmi10.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmmi12.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi7.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr10.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1/pu
+blic/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/ty
+pe1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2013basic/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on plots.pdf (3 pages, 137081 bytes).
 PDF statistics:
- 100 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
+ 149 PDF objects out of 1000 (max. 8388607)
+ 67 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

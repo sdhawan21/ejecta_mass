@@ -53,7 +53,7 @@ def chisq_by_hand(f, t0, obs, err=False):
 	return chisq
 
 def fit_chisq(f, obs, tarr=np.linspace(0, 50, 100)):
-	chiarr = np.array([chisq_by_hand(f, i, obs) for i in tarr])
+	chiarr = np.array([chisq_by_hand(f, i, obs, err=True) for i in tarr])
 	return tarr[chiarr==min(chiarr)][0], min(chiarr)
 
 #doesnt require a function form yet
@@ -64,7 +64,7 @@ bollc = np.loadtxt(bolometric_lightcurve_file)
 #bollc[:,1]=pow(10, bollc[:,1])
 mmax, tmax = peak(bollc)
 
-#crude if loop to not shift light curve if already shifted to phase
+#crude if condition to not shift light curve if already shifted to phase
 if max(bollc[:,0]) < 500:
     tmax = 0
     mmax = max(bollc[:,1])
@@ -102,8 +102,9 @@ t=np.linspace(0, 200, 500)
 
 #evaluate the chisq by hand
 print "The t0 and chisq minimum"
-print fit_chisq(ft.edp_nomc, tail) #, chisq_by_hand(ft.edp_nomc, 28, tail)
-
+tail[:,0]+=risetime
+tfit, chimin = fit_chisq(ft.edp_nomc, tail) #, chisq_by_hand(ft.edp_nomc, 28, tail)
+print tfit, chimin, chimin/len(tail[:,0])
 
 
 #plotting the results
