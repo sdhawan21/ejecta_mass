@@ -95,7 +95,7 @@ t0= popt[0]#+risetime
 
 #print the fit outputs from curve_fit
 print "fiducial timescale, t0 is:", t0, pcov[0]
-print "Ejecta mass is ", ft.ejm(t0), ft.ejm_mc((t0, pcov[0]+3))
+print "Ejecta mass is ", ft.ejm(t0, calcerr=False) #ft.ejm_mc((t0, pcov[0]+3))
 
 #define a template time axis to get the fit deposition curve
 t=np.linspace(0, 200, 500)

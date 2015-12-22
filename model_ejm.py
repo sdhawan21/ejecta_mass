@@ -5,8 +5,26 @@ import sys
 
 
 from pack import bol, fid_time
+from os.path import expanduser
+from scipy.optimize import curve_fit
 
+bp = bol.bol_func().bolpeak
+model = sys.argv[1]
+home = expanduser('~')
+f=home+'/bol_ni_ej/lcbol_distrib/'+model+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
 
+lc = np.loadtxt(f)
+mmax, tmax = bp(f)
+lc[:,0]-=tmax
+cond = (lc[:,0]>40) & (lc[:,0] < 100)
+tail = lc[cond]
+mni=mmax/(bol.arn_coef(tmax)*1e43)
+ft = fid_time.fid_time(mni)
+popt, pcov = curve_fit(ft.edp_nomc, tail[:,0]+tmax, tail[:,1], p0=[30])
+
+ejecta_mass = ft.ejm_mc([popt[0], pcov[0]])
+print ejecta_mass
+"""
 def main():
 	mod = sys.argv[1]
         fwrite = sys.argv[2]
@@ -17,13 +35,13 @@ def main():
        	else:
        		suf = '_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSP.dat'
        
-	f = '/home/sdhawan/bol_ni_ej/lcbol_distrib/'+mod+suf
+	f = '/Users/lapguest/bol_ni_ej/lcbol_distrib/'+mod+suf
 
 	bp = bol.bol_func().bolpeak
 	m,t=bp(f)
         
         
-        dfile = np.loadtxt('/home/sdhawan/tests_paper/ni/files_snpy/tmax_dm15.dat', dtype='string')
+        dfile = np.loadtxt('/Users/lapguest/all_paper/files_snpy/tmax_dm15.dat', dtype='string')
         
         fout= open('model_recons.txt', 'a')
 
@@ -40,7 +58,7 @@ def main():
 	print "The Nickel mass is:", mni
         print "The rise time is :", rt
 	
-	bb = ft.val_calc(mod, '/home/sdhawan/', rt, ir)
+	bb = ft.val_calc(mod, '/Users/lapguest/', rt, ir)
         
         if fwrite == True:
                 fout.write(mod+'\t'+str(bb[1])+'\n')
@@ -76,5 +94,5 @@ if __name__=="__main__":
 	main()
 
 
-
+"""
 
