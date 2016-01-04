@@ -74,6 +74,7 @@ bollc[:,0]-=tmax
 
 #define the late light curve as between +40 - +100 d 
 tail = bollc[(bollc[:,0] > 40) & (bollc[:,0] < 100)]
+print "Number of observations in the tail is:", len(tail)
 rt=True
 #risetime from command line
 risetime= float(sys.argv[2])
