@@ -22,6 +22,21 @@ def peak(lc):
     gl = spl(l)
     return max(gl), l[gl==max(gl)][0]
 
+def chisq_by_hand(f, t0, obs):
+	"""
+	chi2 = (model - flux)**2/err**2
+	"""
+	edep = f(obs[:,0], t0)
+	
+	flux = obs[:,1]
+	
+	chisq = np.sum((edep-flux)**2/obs[:,2]**2)
+	return chisq
+
+def fit_chisq(f, obs, tarr=np.linspace(0, 50, 100)):
+	chiarr = np.array([chisq_by_hand(f, i, obs) for i in tarr])
+	return tarr[chiarr==min(chiarr)][0], min(chiarr)
+
 #doesnt require a function form yet
 bp = bol.bol_func().bolpeak
 bolometric_lightcurve_file = sys.argv[1]#'stritzinger/sn01ay.edep.new.dat'
@@ -36,7 +51,7 @@ if max(bollc[:,0]) < 500:
     mmax = max(bollc[:,1])
 
 bollc[:,0]-=tmax
-
+print "The bolometric peak is:", tmax
 tail = bollc[(bollc[:,0] > 40) & (bollc[:,0] < 100)]
 
 risetime= float(sys.argv[2])
@@ -46,13 +61,28 @@ ft = fid_time.fid_time(mni)
 
 print "The inferred Nickel mass is:", mni
 
-popt, pcov = curve_fit(ft.edp_nomc, tail[:,0], tail[:,1], sigma=tail[:,2])
+popt, pcov = curve_fit(ft.edp_nomc, tail[:,0], tail[:,1], sigma=tail[:,2], p0=[20.])
 
 t0= popt[0]+risetime
 print "fiducial timescale, t0 is:", t0, pcov[0]
 print "Ejecta mass is ", ft.ejm(t0), ft.ejm_mc((t0, pcov[0]+3))
 
 t=np.linspace(0, 200, 500)
+print fit_chisq(ft.edp_nomc, tail), chisq_by_hand(ft.edp_nomc, 9, tail)
+
+
+
+#plotting the results
+plt.figure(1)
 plt.errorbar(bollc[:,0]+risetime, bollc[:,1],bollc[:,2], fmt='rs')
-plt.plot(t, ft.edp_nomc(t, t0))
+plt.plot(t, ft.edp_nomc(t, t0), label='t0='+str(t0))
+plt.plot(t, ft.edp_nomc(t, 38), label='t0=28')
+
+plt.legend(loc=0)
+plt.xlabel('Phase (days)')
+plt.ylabel('Bolometric Flux')
+
+#chisq plot
+plt.figure(2); tarr=np.linspace(0, 50, 100)
+plt.plot(tarr, np.array([chisq_by_hand(ft.edp_nomc,i, tail) for i in tarr]))
 plt.show()
