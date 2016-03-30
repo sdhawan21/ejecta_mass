@@ -161,7 +161,7 @@ plt.figure(1)
 plt.errorbar(bollc[:,0]+risetime, bollc[:,1],bollc[:,2], fmt='rs')
 
 #plot the curves for t0, complete escape and trapping
-plt.plot(t, ft.edp_nomc(t, t0)/1e43, label='t0='+str(t0))
+plt.plot(t, ft.edp_nomc(t, t0)/1e43, label='t0='+str(round(t0,2)))
 plt.plot(t, ft.edp_nomc(t, 0)/1e43, label='Complete Escape')
 plt.plot(t, ft.edp_nomc(t, 100000)/1e43, label="Complete trapping")
 
@@ -173,7 +173,7 @@ plt.errorbar(bollc[:,0]+risetime, bollc[:,1]/1e43,bollc[:,2]/1e43, fmt='rs')
 
 
 plt.legend(loc=0, numpoints=1)
-plt.xlabel('Phase (days)')
+plt.xlabel('Time since explosion (days)')
 plt.ylabel('Bolometric Flux ($\cdot 10^{43}$ erg s$^{-1}$)')
 
 
