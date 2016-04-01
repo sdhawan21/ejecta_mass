@@ -8,6 +8,9 @@ Aim: To have a framework for measuring the diffusion timescales of SNIa from the
 Now, a comparison between the t1 from photometry and from nebular spectra can tell us about ejecta stratification
 
 02-12:
-	Create an Mni-Mej plot from the CSP data. Compare to models. 
+	Create an Mni-Mej plot from the CSP data. Compare to models. 	
+18-12:
+	Inference (if Bruno is convinced that this indeed a correct calculation of the M_ej and t_0)
 
-
+	--> There appear to be two clusters in the data, one with sub-Mch masses and another clumped near the Chandrasekhar mass, hinting towards possibly different explosion models explaining the Mch and sub-Mch scenarios
+	** Similar to whats seen in Scalzo et al. 2014
