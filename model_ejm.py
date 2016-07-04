@@ -13,17 +13,33 @@ model = sys.argv[1]
 home = expanduser('~')
 f=home+'/bol_ni_ej/lcbol_distrib/'+model+'_lcbol_u_CSPB_CSPV_CSPr_CSPi_CSPJ_CSPH_CSP.dat'
 
+rtfile = np.loadtxt('model_risetime.dat', dtype='string')
 lc = np.loadtxt(f)
 mmax, tmax = bp(f)
 lc[:,0]-=tmax
 cond = (lc[:,0]>40) & (lc[:,0] < 100)
 tail = lc[cond]
-mni=mmax/(bol.arn_coef(tmax)*1e43)
-ft = fid_time.fid_time(mni)
-popt, pcov = curve_fit(ft.edp_nomc, tail[:,0]+tmax, tail[:,1], p0=[30])
 
+risetime = float(rtfile[rtfile[:,0]==model][0][1])
+
+print "the rise time is", risetime, "days"
+print "The lmax (bol) is", mmax, "days"
+mni=mmax/(bol.arn_coef(risetime)*1e43)
+ft = fid_time.fid_time(mni)
+popt, pcov = curve_fit(ft.edp_nomc, tail[:,0]+risetime, tail[:,1], p0=[30])
+print "The transparency timescale is", popt[0], "days"
 ejecta_mass = ft.ejm_mc([popt[0], pcov[0]])
 print ejecta_mass
+
+
+tarr = np.linspace(lc[:,0].min(), lc[:,0].max(), 10000)
+
+if sys.argv[2] == 'plot':
+    plt.plot(lc[:,0]+tmax, lc[:,1], 'rs')
+    plt.plot(tarr, ft.edp_nomc(tarr, popt[0]))
+    plt.show()
+
+    
 """
 def main():
 	mod = sys.argv[1]

@@ -1,0 +1,4 @@
+'test_combfit.py' is the script to fit both 56Ni mass (from the Number of Nickel atoms) and the transparency timescale from the bolometric light curve (the errors on the transparency are therefore higher in the simultaneous fit compared to the case with independent 56Ni from Arnett)
+
+
+

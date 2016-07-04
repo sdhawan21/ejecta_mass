@@ -1,8 +1,20 @@
+<<<<<<< HEAD
 
 import numpy as np
 from scipy.integrate import quad, tplquad
 
 velocity_range = [0., np.inf]
+=======
+import numpy as np
+
+from scipy.integrate import quad, tplquad
+
+#velocity range in units of e-folding velocity 
+ve = 2700.
+v_outer = 15000.
+velocity_range = [0.0, np.inf] #v_outer/ve]
+
+>>>>>>> 16bd5f60542a4bb14357e4a409caafb34c2a1020
 a = velocity_range[0]; b=velocity_range[1]
 
 q_formfac_num = lambda zs,u,z: z**2*np.exp(-z)*np.exp(-np.sqrt(z**2+zs**2+2*u*zs*z))
